@@ -1,5 +1,5 @@
 import pandas as pd
-import numpy as pd
+import numpy as np
 from datetime import datetime
 
 class DataProcessor:
@@ -10,19 +10,19 @@ class DataProcessor:
     def process_data(self):
         # Convert publish time to datetime
         self.data['Publish time'] = pd.to_datetime(self.data['Publish time'])
-        
+
         # Extract time components
         self.data['Hour'] = self.data['Publish time'].dt.hour
         self.data['Day'] = self.data['Publish time'].dt.day_name()
         self.data['Month'] = self.data['Publish time'].dt.month_name()
-        
+
         # Calculate engagement rate
         self.data['Engagement Rate'] = (self.data['Likes'] + self.data['Comments']) / self.data['Impressions'] * 100
-        
+
         # Clean numerical columns
         numeric_cols = ['Impressions', 'Reach', 'Likes', 'Comments', 'Saves', 'Shares']
         self.data[numeric_cols] = self.data[numeric_cols].fillna(0)
-        
+
         # Process post type
         self.data['Post type'] = self.data['Post type'].fillna('Unknown')
 
